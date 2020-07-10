@@ -1,0 +1,44 @@
+.App {
+  text-align: center;
+}
+
+.main-title {
+  font-size: 50px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  letter-spacing: 4px;
+}
+
+.directions {
+  margin-bottom: 30px;
+  padding: 25px;
+}
+
+.input-range__track--active,
+.input-range__slider {
+    background: black !important;
+    border-color: black !important;
+} 
+
+.stage {
+  padding: 25px;
+  border-radius: 5px;
+  background-color: white;
+  
+  box-shadow: 0 0 10px 8px rgba(68, 68, 68, 0.6);
+}
+
+.stage-container {
+  background:
+    radial-gradient(circle at 0% 50%, rgba(96, 16, 48, 0) 9px, #613 10px, rgba(96, 16, 48, 0) 11px) 0px 10px,
+    radial-gradient(at 100% 100%,      rgba(96, 16, 48, 0) 9px, #613 10px, rgba(96, 16, 48, 0) 11px),
+#8a3;
+  background-size: 20px 20px;
+  padding: 35px 25px;
+  margin-left: 7%;
+  margin-right: 7%;
+  box-shadow: 0 0 10px 8px rgba(68, 68, 68, 0.6);
+}
+
+
+

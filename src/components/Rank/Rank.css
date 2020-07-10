@@ -1,0 +1,19 @@
+.rank-container {
+    position: absolute;
+    top: 15%;
+    right: 1%;
+    font-family: "Courier New", Courier, monospace;
+    color: #4B5320;
+}
+
+@media (max-width: 600px) {
+    .rank-container{
+      position: relative;
+	}
+  }
+
+
+.rank-div {
+    text-align: center;
+}
+
