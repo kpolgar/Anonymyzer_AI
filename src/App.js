@@ -8,6 +8,7 @@ import InputRange from 'react-input-range';
 import 'react-input-range/lib/css/index.css';
 import BlurFaces from './components/BlurFaces/BlurFaces.js';
 import Rank from './components/Rank/Rank.js';
+import SignIn from './components/SignIn/SignIn';
 
 
 const clarifai = new Clarifai.App({apiKey: 'c57564281661483a88b52cc200e8780e'});
@@ -23,7 +24,8 @@ export default class App extends Component {
       data: [],
       smooth: true,
       uploadedFile: null,
-      download_button: false
+      download_button: false,
+      route: 'signin'
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
@@ -111,90 +113,95 @@ export default class App extends Component {
       <div className="App">
       <Navigation/>
       <Logo />
-      <Rank />
-        <h1 className='main-title'>Anonymizer AI</h1>
-        <h5 className='directions'><strong>Directions:</strong> Upload an image and press 'blur' to blur all the faces on the image</h5>
-        <div className="stage-container">
-        <Container className='stage'>
-          <Row className="justify-content-md-center">
-            <Col md="1">
-              <strong>Smooth</strong>
-            </Col>
-            <Col md="3">
-              <Label>
-                <Input
-                  type="checkbox"
-                  id="cb-4"
-                  checked={smooth}
-                  onChange={e => this.setState(
-                    { smooth: e.target.checked }
-                  )}
-                />
-                (Will be pixelated if unchecked)
-              </Label>
-            </Col>
-            <Col md="1">
-              <strong>Threshold</strong>
-            </Col>
-            <Col md="7">
-              <InputRange
-                step={0.25}
-                maxValue={10}
-                minValue={0}
-                value={threshold}
-                onChange={threshold => this.setState({ threshold })}
-                id="custom_range"
-              />
-             </Col>
-             <Col md="12" style={{paddingTop: 20}}>
-               <hr></hr>
-             </Col>
-           </Row>
-           <Row>
-             <Col md="6">
-               <div className="uploaded-image">
-                 <input
-                  onChange={this.handleChange}
-                   type="file"
-                   backgroundColor="red"
-                   accept="image/x-png,image/gif,image/jpeg"
-                 />
-                 {
+      { this.state.route === 'signin' 
+        ? <SignIn />
+        : <div>
+            <Rank />
+            <h1 className='main-title'>Anonymizer AI</h1>
+            <h5 className='directions'><strong>Directions:</strong> Upload an image and press 'blur' to blur all the faces on the image</h5>
+            <div className="stage-container">
+            <Container className='stage'>
+              <Row className="justify-content-md-center">
+                <Col md="1">
+                  <strong>Smooth</strong>
+                </Col>
+                <Col md="3">
+                  <Label>
+                    <Input
+                      type="checkbox"
+                      id="cb-4"
+                      checked={smooth}
+                      onChange={e => this.setState(
+                        { smooth: e.target.checked }
+                      )}
+                    />
+                    (Will be pixelated if unchecked)
+                  </Label>
+                </Col>
+                <Col md="1">
+                  <strong>Threshold</strong>
+                </Col>
+                <Col md="7">
+                  <InputRange
+                    step={0.25}
+                    maxValue={10}
+                    minValue={0}
+                    value={threshold}
+                    onChange={threshold => this.setState({ threshold })}
+                    id="custom_range"
+                  />
+                </Col>
+                <Col md="12" style={{paddingTop: 20}}>
+                  <hr></hr>
+                </Col>
+              </Row>
+              <Row>
+                <Col md="6">
+                  <div className="uploaded-image">
+                    <input
+                      onChange={this.handleChange}
+                      type="file"
+                      backgroundColor="red"
+                      accept="image/x-png,image/gif,image/jpeg"
+                    />
+                    {
+                        image.hasOwnProperty("uri") &&
+                          <img
+                            src={image.uri}
+                            alt="upload"
+                            style={{maxWidth: "100%", margin: "10px 0px"}}
+                          />
+                    }
+                  </div>
+                  {
                     image.hasOwnProperty("uri") &&
-                      <img
-                        src={image.uri}
-                        alt="upload"
-                        style={{maxWidth: "100%", margin: "10px 0px"}}
-                      />
-                 }
-               </div>
-               {
-                 image.hasOwnProperty("uri") &&
-                   <Button 
-                    onClick={this.handleClick}
-                     color="info" 
-                     size="lg" 
-                     id="blur_button"
-                   >
-                     Blur Faces
-                   </Button>
-               }
-             </Col>
-             <Col md="6">
-              <BlurFaces
-              image={image}
-              threshold={threshold}
-              data={data}
-              smooth={smooth}
-              width={this.state.width}
-              height={this.state.height}
-              onBlurredImage={this.onBlurredImage}
-              download_button={this.download_button}
-            />
-             </Col>
-           </Row>
-         </Container>
-         </div>
+                      <Button 
+                        onClick={this.handleClick}
+                        color="info" 
+                        size="lg" 
+                        id="blur_button"
+                      >
+                        Blur Faces
+                      </Button>
+                  }
+                </Col>
+                <Col md="6">
+                  <BlurFaces
+                  image={image}
+                  threshold={threshold}
+                  data={data}
+                  smooth={smooth}
+                  width={this.state.width}
+                  height={this.state.height}
+                  onBlurredImage={this.onBlurredImage}
+                  download_button={this.download_button}
+                />
+                </Col>
+              </Row>
+            </Container>
+            </div>
+          </div>
+        }
        </div>
      )
   }
