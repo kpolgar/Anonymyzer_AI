@@ -6,9 +6,7 @@ import "./BlurFaces.css";
 export default class BlurFaces extends Component {
    
   getFaces(data) {
-      console.log('data', data);
-      
-   
+
       //result.outputs[0].data.regions[0].region_info.bounding_box
       //[top_row, left_col, bottom_row, right_col]
         return data.map(face => ({
@@ -25,7 +23,6 @@ export default class BlurFaces extends Component {
       }
 
       download(){
-        console.log('trying to download')
         var canvas = document.getElementById("canvas");
         var url = canvas.toDataURL("image/png");
         var link = document.createElement('a');
@@ -69,8 +66,6 @@ export default class BlurFaces extends Component {
             imaskCtx.globalCompositeOperation = "destination-in";
             this.getFaces(data).forEach((face, i) => {
                 // Determine the blur amount by width of face
-                console.log(typeof(data));
-                console.log(face.x, face.y, face.w, face.h)
                 let blurAmount = threshold
                 if(face.w >= 300) blurAmount = threshold*2.5
                 else if(face.w <= 30) blurAmount = threshold*0.25
