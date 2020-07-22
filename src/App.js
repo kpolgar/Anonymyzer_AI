@@ -26,14 +26,31 @@ export default class App extends Component {
       uploadedFile: null,
       download_button: false,
       route: 'signin',
-      isSignedIn: false
+      isSignedIn: false,
+      user: {
+        id: '',
+        name: '',
+        email: '',
+        entries: 0,
+        joined: ''
+      }
     }
+
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.getDataUri = this.getDataUri.bind(this);
     this.faceDetection = this.faceDetection.bind(this);
    }
 
+   loadUser = (data) => {
+     this.setState({user: {
+      id: data.id,
+      name: data.name,
+      email: data.email,
+      entries: data.entries,
+      joined: data.joined
+     }})
+   }
 
   handleChange(event) {
     if(! event.target.files || event.target.files.length < 1) return
@@ -59,6 +76,19 @@ export default class App extends Component {
   handleClick = (event) => {
     this.getDataUri(this.state.uploadedFile, (dataUri) => {
       this.faceDetection(dataUri);
+      
+        fetch('http://localhost:3000/image',{
+          method: 'put',
+          headers: {'Content-Type': 'application/json'}, 
+          body: JSON.stringify({
+          id: this.state.user.id
+          })
+        })
+          .then(response => response.json())
+          .then(count => {
+            this.setState(Object.assign(this.state.user, {entries: count}))
+          })
+      
     });
   }
 
@@ -98,9 +128,9 @@ export default class App extends Component {
     clarifai.models.predict(
       Clarifai.FACE_DETECT_MODEL, {base64:image})
       .then(result => {
-        
         this.setState({data: result.outputs[0].data.regions})
       })
+      
       .catch(error => console.log(error))
      }   
   
@@ -116,7 +146,7 @@ export default class App extends Component {
       { 
         this.state.route === 'home' 
         ? <div>
-        <Rank />
+        <Rank name={this.state.user.name} entries={this.state.user.entries}/> 
         <h1 className='main-title'>Anonymizer AI</h1>
         <h5 className='directions'><strong>Directions:</strong> Upload an image and press 'blur' to blur all the faces on the image</h5>
         <div className="stage-container">
@@ -203,8 +233,8 @@ export default class App extends Component {
       </div> 
         : (
           this.state.route === 'signin' ?
-          <SignIn onRouteChange={this.onRouteChange}/>
-          : <Register onRouteChange={this.onRouteChange}/>
+          <SignIn loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
+          : <Register loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
         )
         
         }
