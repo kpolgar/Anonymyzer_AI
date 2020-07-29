@@ -13,28 +13,29 @@ import Register from './components/Register/Register';
 
 const clarifai = new Clarifai.App({apiKey: 'c57564281661483a88b52cc200e8780e'});
 
+const initialState = {
+  threshold: 9,
+  image: {},
+  data: [],
+  smooth: true,
+  uploadedFile: null,
+  download_button: false,
+  route: 'signin',
+  isSignedIn: false,
+  user: {
+    id: '',
+    name: '',
+    email: '',
+    entries: 0,
+    joined: ''
+  }
+}
 
 export default class App extends Component {
   constructor(props) {
     super(props);
     
-    this.state = {
-      threshold: 9,
-      image: {},
-      data: [],
-      smooth: true,
-      uploadedFile: null,
-      download_button: false,
-      route: 'signin',
-      isSignedIn: false,
-      user: {
-        id: '',
-        name: '',
-        email: '',
-        entries: 0,
-        joined: ''
-      }
-    }
+    this.state = initialState;
 
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
@@ -100,7 +101,7 @@ export default class App extends Component {
 
   onRouteChange = (route) => {
     if (route === 'signout') {
-      this.setState({isSignedIn: false})
+      this.setState(initialState)
     }
     if (route === 'home') {
       this.setState({isSignedIn: true})
