@@ -33,4 +33,4 @@ This app was built with React.js on the front-end and it leverages Node.js on ba
 
 ### APIs
 * <a href="https://clarifai.com/models/face-detection-image-recognition-model-a403429f2ddf4b49b307e318f00e528b-detection">Clarifai</a>
-* <a href="https://github.com/kpolgar/Anonymyzer_AI_API">Smart Brain API</a>
+* <a href="https://github.com/kpolgar/Anonymyzer_AI_API">Anonymizer API</a>
