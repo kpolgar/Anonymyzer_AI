@@ -5,7 +5,7 @@ This app was built with React.js on the front-end and it leverages Node.js on ba
 
 <a href="https://anonymizer-ai.herokuapp.com/">Check it out on Heroku</a>
 
-![picture of the app](https://github.com/kpolgar/smart-face-finder/blob/master/smart-face-finder.png)
+![picture of the app](https://github.com/kpolgar/Anonymyzer_AI/blob/master/Anonymizer_AI.png)
 
 <a href="https://github.com/kpolgar/Anonymyzer_AI_API">Server Repo</a>
 
