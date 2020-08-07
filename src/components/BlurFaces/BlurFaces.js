@@ -23,8 +23,8 @@ export default class BlurFaces extends Component {
       }
 
       download(){
-        var canvas = document.getElementById("canvas");
-        var url = canvas.toDataURL("image/png");
+        // var canvas = document.getElementById("canvas");
+        // var url = canvas.toDataURL("image/png");
         var link = document.createElement('a');
         link.download = 'blurred_image.png';
         link.href = document.getElementById('canvas').toDataURL();

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './App.css';
 import Navigation from './components/Navigation/Navigation';
 import Logo from './components/Logo/Logo';
-import Clarifai from 'clarifai';
 import { Container, Row, Col, Button, Input, Label } from 'reactstrap';
 import InputRange from 'react-input-range';
 import 'react-input-range/lib/css/index.css';
@@ -11,11 +10,11 @@ import Rank from './components/Rank/Rank.js';
 import SignIn from './components/SignIn/SignIn';
 import Register from './components/Register/Register';
 
-const clarifai = new Clarifai.App({apiKey: 'c57564281661483a88b52cc200e8780e'});
 
 const initialState = {
   threshold: 9,
   image: {},
+  b64: '',
   data: [],
   smooth: true,
   uploadedFile: null,
@@ -126,8 +125,15 @@ export default class App extends Component {
   }
 
   faceDetection(image) {
-    clarifai.models.predict(
-      Clarifai.FACE_DETECT_MODEL, {base64:image})
+      this.setState({b64: image});
+      fetch('http://localhost:3000/imageurl', {
+        method: 'post',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          b64: this.state.b64
+        })
+      })
+      .then(response => response.json())
       .then(result => {
         this.setState({data: result.outputs[0].data.regions})
       })
